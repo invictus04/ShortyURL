@@ -6,44 +6,25 @@ import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function ShortenCard() {
-  const [url, setUrl] = useState(""); // State to store the entered URL
-  const [shortenedUrl, setShortenedUrl] = useState(""); // State to store the shortened URL
-  // const [fetchedUrl, setFetchedUrl] = useState("");
+  const [url, setUrl] = useState(""); 
+  const [shortenedUrl, setShortenedUrl] = useState(""); 
 
   const handleShortenUrl = async () => {
     if (url) {
       try {
-        const response = await axios.post(`http://localhost:8000/url`, null, {
+        const response = await axios.post(`https://successful-adena-invictus04-e0d9f500.koyeb.app/url`, null, {
           params: { url },
         });
         setShortenedUrl(response.data);
-        console.log("Request has been sent to ", response.data.shortUrl);
+        // console.log("Request has been sent to ", response.data.shortUrl);
       } catch (error) {
-        console.error("Error shortening the URL:", error);
+        // console.error("Error shortening the URL:", error);
         alert("Failed to shorten the URL. Please try again.");
       }
     } else {
       alert("Please enter a URL.");
     }
   };
-
-  // const handleFetchShortenedUrl = async () => {
-  //   if (shortenedUrl) {
-  //     try {
-  //       const response = await axios.get(`http://localhost:8000/url`, {
-  //         params: { shortUrl: shortenedUrl },
-  //       });
-  //       setFetchedUrl(response.data);
-  //       // console.log("Fetched URL data: ", response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching the shortened URL:", error);
-  //       alert("Failed to fetch the shortened URL. Please try again.");
-  //     }
-  //   } else {
-  //     alert("No shortened URL available to fetch.");
-  //   }
-  // };
-
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center vh-100">
@@ -83,7 +64,7 @@ function ShortenCard() {
           e.preventDefault(); 
           try {
             const hashValue = shortenedUrl.split('/').pop();
-            const response = await axios.get(`http://localhost:8000/url`, {
+            const response = await axios.get(`https://successful-adena-invictus04-e0d9f500.koyeb.app/url`, {
               params: { value: hashValue },
             });
             // if (response.data && response.data.value) {
@@ -97,7 +78,7 @@ function ShortenCard() {
             // }
             window.open(response.data, "_blank");
           } catch (error) {
-            console.error("Error fetching the shortened URL:", error);
+            // console.error("Error fetching the shortened URL:", error);
             alert("Failed to fetch the original URL. Please try again.");
           }
         }}
@@ -108,13 +89,6 @@ function ShortenCard() {
   </div>
 )}
 
-
-        {/* {fetchedUrl && (
-          <div className="mt-4 text-center">
-            <h4>Fetched URL Data:</h4>
-            <pre>{JSON.stringify(fetchedUrl, null, 2)}</pre>
-          </div>
-        )} */}
 
         <p className="mt-3 text-muted">
           ShortyURL is a <b>free tool to shorten URLs</b> and generate short
