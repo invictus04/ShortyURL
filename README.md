@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+# Shorty URL Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a simple URL shortener application that converts long URLs into short, easy-to-share URLs. It is built using **Spring Boot** for the backend and **PostgreSQL** for persistent storage. The project is deployed online and available for testing and production use.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+* Convert long URLs into short, shareable URLs.
+* Retrieve the original URL using the short URL identifier.
+* Built with a robust backend using Spring Boot and PostgreSQL.
+* Deployed online for real-world usage.
 
-### `npm start`
+## Technologies Used
+* ***Backend Framework:*** Spring Boot
+* ***Database:*** PostgreSQL
+* ***Build Tool:*** Maven
+* ***Programming Language:*** Java 21
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Endpoints
+### 1. Shorten a URL (POST request)
+**Endpoint:** ``/url``
+**Description:** Converts a long URL into a shortened URL.
+**Request Example:**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```http
+POST /url
+Content-Type: application/json
 
-### `npm test`
+{
+    "url": "https://www.example.com/some/very/long/url"
+}
+```
+**Response Example:**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```json
+{
+    "shortUrl": "https://short.url/abc123"
+}
+```
 
-### `npm run build`
+### 2. Retrieve Original URL (GET request)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Endpoint:** ``/url/{value}``
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Description:** Retrieves the original long URL using the short URL identifier (value).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Request Example:**
 
-### `npm run eject`
+```http
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+GET /url/abc123
+```
+**Response Example:**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```json
+{
+    "longUrl": "https://www.example.com/some/very/long/url"
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Setup Instructions
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Prerequisites
+* **Java 17** or higher
+* **Maven**
+* **PostgreSQL Database**
+  
+### Steps to Run Locally
+**1. Clone the Repository:**
+```bash
+git clone https://github.com/your-username/url-shortener.git
+cd url-shortener
+```
+**2. Database Setup:**
 
-## Learn More
+  * Install and start PostgreSQL.
+  * Create a new database:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```sql
+Copy code
+CREATE DATABASE urldb;
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* Update the database credentials in the `application.properties` file:
 
-### Code Splitting
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/urldb
+spring.datasource.username=your-username
+spring.datasource.password=your-password
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
+**3. Build and Run the Application:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  * Build the project:
+```bash
+./mvnw clean package
+```
+  * Start the Spring Boot application:
+```bash
+java -jar target/urlShortner-0.0.1-SNAPSHOT.jar
+```
+  * The application will be available at http://localhost:8080.
 
-### Analyzing the Bundle Size
+**4. Interact with the API:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+  * Use tools like Postman, curl, or your browser to interact with the API endpoints.
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Live Application
+The project is deployed and accessible at:
+Deployed URL: https://shorty-ovitwijcb-invictus04s-projects.vercel.app/
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
